@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlm.xpjf.mapper.HouseholdAlbumMapper" >
+  <resultMap id="BaseResultMap" type="com.dlm.xpjf.pojo.HouseholdAlbum" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="album_title" property="albumTitle" jdbcType="VARCHAR" />
+    <result column="album_description" property="albumDescription" jdbcType="VARCHAR" />
+    <result column="album_cover" property="albumCover" jdbcType="VARCHAR" />
+    <result column="household_id" property="householdId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, album_title, album_description, album_cover, household_id, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dlm.xpjf.pojo.HouseholdAlbumExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from household_album
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from household_album
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from household_album
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlm.xpjf.pojo.HouseholdAlbumExample" >
+    delete from household_album
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlm.xpjf.pojo.HouseholdAlbum" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into household_album (album_title, album_description, album_cover, 
+      household_id, create_time, update_time
+      )
+    values (#{albumTitle,jdbcType=VARCHAR}, #{albumDescription,jdbcType=VARCHAR}, #{albumCover,jdbcType=VARCHAR}, 
+      #{householdId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlm.xpjf.pojo.HouseholdAlbum" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into household_album
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="albumTitle != null" >
+        album_title,
+      </if>
+      <if test="albumDescription != null" >
+        album_description,
+      </if>
+      <if test="albumCover != null" >
+        album_cover,
+      </if>
+      <if test="householdId != null" >
+        household_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="albumTitle != null" >
+        #{albumTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="albumDescription != null" >
+        #{albumDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="albumCover != null" >
+        #{albumCover,jdbcType=VARCHAR},
+      </if>
+      <if test="householdId != null" >
+        #{householdId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlm.xpjf.pojo.HouseholdAlbumExample" resultType="java.lang.Integer" >
+    select count(*) from household_album
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update household_album
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.albumTitle != null" >
+        album_title = #{record.albumTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumDescription != null" >
+        album_description = #{record.albumDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumCover != null" >
+        album_cover = #{record.albumCover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.householdId != null" >
+        household_id = #{record.householdId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update household_album
+    set id = #{record.id,jdbcType=INTEGER},
+      album_title = #{record.albumTitle,jdbcType=VARCHAR},
+      album_description = #{record.albumDescription,jdbcType=VARCHAR},
+      album_cover = #{record.albumCover,jdbcType=VARCHAR},
+      household_id = #{record.householdId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlm.xpjf.pojo.HouseholdAlbum" >
+    update household_album
+    <set >
+      <if test="albumTitle != null" >
+        album_title = #{albumTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="albumDescription != null" >
+        album_description = #{albumDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="albumCover != null" >
+        album_cover = #{albumCover,jdbcType=VARCHAR},
+      </if>
+      <if test="householdId != null" >
+        household_id = #{householdId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlm.xpjf.pojo.HouseholdAlbum" >
+    update household_album
+    set album_title = #{albumTitle,jdbcType=VARCHAR},
+      album_description = #{albumDescription,jdbcType=VARCHAR},
+      album_cover = #{albumCover,jdbcType=VARCHAR},
+      household_id = #{householdId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

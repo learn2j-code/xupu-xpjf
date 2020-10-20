@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dlm.xpjf.mapper.HouseholdMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.dlm.xpjf.pojo.HouseholdMember" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_surname" property="memberSurname" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_nickname" property="memberNickname" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="main_flag" property="mainFlag" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="birthday_time" property="birthdayTime" jdbcType="VARCHAR" />
+    <result column="household_id" property="householdId" jdbcType="INTEGER" />
+    <result column="household_name" property="householdName" jdbcType="VARCHAR" />
+    <result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR" />
+    <result column="member_detail" property="memberDetail" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="father_id" property="fatherId" jdbcType="INTEGER" />
+    <result column="father_name" property="fatherName" jdbcType="VARCHAR" />
+    <result column="mother_id" property="motherId" jdbcType="INTEGER" />
+    <result column="mother_name" property="motherName" jdbcType="VARCHAR" />
+    <result column="spouse_id" property="spouseId" jdbcType="INTEGER" />
+    <result column="spouse_name" property="spouseName" jdbcType="VARCHAR" />
+    <result column="married" property="married" jdbcType="INTEGER" />
+    <result column="relation_list" property="relationList" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_surname, member_name, member_nickname, gender, main_flag, phone, birthday_time, 
+    household_id, household_name, head_img_url, member_detail, user_id, father_id, father_name, 
+    mother_id, mother_name, spouse_id, spouse_name, married, relation_list, create_time, 
+    update_time, introduction
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dlm.xpjf.pojo.HouseholdMemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from household_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from household_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from household_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.dlm.xpjf.pojo.HouseholdMemberExample" >
+    delete from household_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.dlm.xpjf.pojo.HouseholdMember" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into household_member (member_surname, member_name, member_nickname, 
+      gender, main_flag, phone, 
+      birthday_time, household_id, household_name, 
+      head_img_url, member_detail, user_id, 
+      father_id, father_name, mother_id, 
+      mother_name, spouse_id, spouse_name, 
+      married, relation_list, create_time, 
+      update_time, introduction)
+    values (#{memberSurname,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, #{memberNickname,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{mainFlag,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{birthdayTime,jdbcType=VARCHAR}, #{householdId,jdbcType=INTEGER}, #{householdName,jdbcType=VARCHAR}, 
+      #{headImgUrl,jdbcType=VARCHAR}, #{memberDetail,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{fatherId,jdbcType=INTEGER}, #{fatherName,jdbcType=VARCHAR}, #{motherId,jdbcType=INTEGER}, 
+      #{motherName,jdbcType=VARCHAR}, #{spouseId,jdbcType=INTEGER}, #{spouseName,jdbcType=VARCHAR}, 
+      #{married,jdbcType=INTEGER}, #{relationList,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{introduction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dlm.xpjf.pojo.HouseholdMember" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into household_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memberSurname != null" >
+        member_surname,
+      </if>
+      <if test="memberName != null" >
+        member_name,
+      </if>
+      <if test="memberNickname != null" >
+        member_nickname,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="mainFlag != null" >
+        main_flag,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="birthdayTime != null" >
+        birthday_time,
+      </if>
+      <if test="householdId != null" >
+        household_id,
+      </if>
+      <if test="householdName != null" >
+        household_name,
+      </if>
+      <if test="headImgUrl != null" >
+        head_img_url,
+      </if>
+      <if test="memberDetail != null" >
+        member_detail,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="fatherId != null" >
+        father_id,
+      </if>
+      <if test="fatherName != null" >
+        father_name,
+      </if>
+      <if test="motherId != null" >
+        mother_id,
+      </if>
+      <if test="motherName != null" >
+        mother_name,
+      </if>
+      <if test="spouseId != null" >
+        spouse_id,
+      </if>
+      <if test="spouseName != null" >
+        spouse_name,
+      </if>
+      <if test="married != null" >
+        married,
+      </if>
+      <if test="relationList != null" >
+        relation_list,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memberSurname != null" >
+        #{memberSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNickname != null" >
+        #{memberNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="mainFlag != null" >
+        #{mainFlag,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdayTime != null" >
+        #{birthdayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="householdId != null" >
+        #{householdId,jdbcType=INTEGER},
+      </if>
+      <if test="householdName != null" >
+        #{householdName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null" >
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="memberDetail != null" >
+        #{memberDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="fatherId != null" >
+        #{fatherId,jdbcType=INTEGER},
+      </if>
+      <if test="fatherName != null" >
+        #{fatherName,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        #{motherId,jdbcType=INTEGER},
+      </if>
+      <if test="motherName != null" >
+        #{motherName,jdbcType=VARCHAR},
+      </if>
+      <if test="spouseId != null" >
+        #{spouseId,jdbcType=INTEGER},
+      </if>
+      <if test="spouseName != null" >
+        #{spouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="married != null" >
+        #{married,jdbcType=INTEGER},
+      </if>
+      <if test="relationList != null" >
+        #{relationList,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dlm.xpjf.pojo.HouseholdMemberExample" resultType="java.lang.Integer" >
+    select count(*) from household_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update household_member
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberSurname != null" >
+        member_surname = #{record.memberSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberName != null" >
+        member_name = #{record.memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberNickname != null" >
+        member_nickname = #{record.memberNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.mainFlag != null" >
+        main_flag = #{record.mainFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthdayTime != null" >
+        birthday_time = #{record.birthdayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.householdId != null" >
+        household_id = #{record.householdId,jdbcType=INTEGER},
+      </if>
+      <if test="record.householdName != null" >
+        household_name = #{record.householdName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImgUrl != null" >
+        head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberDetail != null" >
+        member_detail = #{record.memberDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fatherId != null" >
+        father_id = #{record.fatherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fatherName != null" >
+        father_name = #{record.fatherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherId != null" >
+        mother_id = #{record.motherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.motherName != null" >
+        mother_name = #{record.motherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spouseId != null" >
+        spouse_id = #{record.spouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.spouseName != null" >
+        spouse_name = #{record.spouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.married != null" >
+        married = #{record.married,jdbcType=INTEGER},
+      </if>
+      <if test="record.relationList != null" >
+        relation_list = #{record.relationList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.introduction != null" >
+        introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update household_member
+    set id = #{record.id,jdbcType=INTEGER},
+      member_surname = #{record.memberSurname,jdbcType=VARCHAR},
+      member_name = #{record.memberName,jdbcType=VARCHAR},
+      member_nickname = #{record.memberNickname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      main_flag = #{record.mainFlag,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      birthday_time = #{record.birthdayTime,jdbcType=VARCHAR},
+      household_id = #{record.householdId,jdbcType=INTEGER},
+      household_name = #{record.householdName,jdbcType=VARCHAR},
+      head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+      member_detail = #{record.memberDetail,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      father_id = #{record.fatherId,jdbcType=INTEGER},
+      father_name = #{record.fatherName,jdbcType=VARCHAR},
+      mother_id = #{record.motherId,jdbcType=INTEGER},
+      mother_name = #{record.motherName,jdbcType=VARCHAR},
+      spouse_id = #{record.spouseId,jdbcType=INTEGER},
+      spouse_name = #{record.spouseName,jdbcType=VARCHAR},
+      married = #{record.married,jdbcType=INTEGER},
+      relation_list = #{record.relationList,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      introduction = #{record.introduction,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dlm.xpjf.pojo.HouseholdMember" >
+    update household_member
+    <set >
+      <if test="memberSurname != null" >
+        member_surname = #{memberSurname,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberNickname != null" >
+        member_nickname = #{memberNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="mainFlag != null" >
+        main_flag = #{mainFlag,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdayTime != null" >
+        birthday_time = #{birthdayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="householdId != null" >
+        household_id = #{householdId,jdbcType=INTEGER},
+      </if>
+      <if test="householdName != null" >
+        household_name = #{householdName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null" >
+        head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="memberDetail != null" >
+        member_detail = #{memberDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="fatherId != null" >
+        father_id = #{fatherId,jdbcType=INTEGER},
+      </if>
+      <if test="fatherName != null" >
+        father_name = #{fatherName,jdbcType=VARCHAR},
+      </if>
+      <if test="motherId != null" >
+        mother_id = #{motherId,jdbcType=INTEGER},
+      </if>
+      <if test="motherName != null" >
+        mother_name = #{motherName,jdbcType=VARCHAR},
+      </if>
+      <if test="spouseId != null" >
+        spouse_id = #{spouseId,jdbcType=INTEGER},
+      </if>
+      <if test="spouseName != null" >
+        spouse_name = #{spouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="married != null" >
+        married = #{married,jdbcType=INTEGER},
+      </if>
+      <if test="relationList != null" >
+        relation_list = #{relationList,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dlm.xpjf.pojo.HouseholdMember" >
+    update household_member
+    set member_surname = #{memberSurname,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      member_nickname = #{memberNickname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      main_flag = #{mainFlag,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      birthday_time = #{birthdayTime,jdbcType=VARCHAR},
+      household_id = #{householdId,jdbcType=INTEGER},
+      household_name = #{householdName,jdbcType=VARCHAR},
+      head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      member_detail = #{memberDetail,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      father_id = #{fatherId,jdbcType=INTEGER},
+      father_name = #{fatherName,jdbcType=VARCHAR},
+      mother_id = #{motherId,jdbcType=INTEGER},
+      mother_name = #{motherName,jdbcType=VARCHAR},
+      spouse_id = #{spouseId,jdbcType=INTEGER},
+      spouse_name = #{spouseName,jdbcType=VARCHAR},
+      married = #{married,jdbcType=INTEGER},
+      relation_list = #{relationList,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      introduction = #{introduction,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
